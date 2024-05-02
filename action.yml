@@ -1,0 +1,28 @@
+name: 'wwwqr sec check'
+description: 'Looks for your bad code'
+inputs:
+  test-check:
+    description: 'Runs the test case'
+    required: true
+    default: 'All good'
+outputs:
+  random-int:
+    description: "Random int"
+    value: ${{ steps.rand-num-gen.outputs.rand-num }}
+runs:
+  using: "composite"
+  steps:
+    - name: Run test case
+      run: echo "Test status is $TEST_VALUE."
+      shell: bash
+      env:
+        TEST_VALUE: ${{ inputs.test-check }}
+
+    - name: Random num generator
+      id: rand-num-gen
+      run: echo "rand-num=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Last test action
+      run: test.sh
+      shell: bash
