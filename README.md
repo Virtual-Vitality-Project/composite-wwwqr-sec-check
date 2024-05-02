@@ -1,0 +1,1 @@
+[![security-checker](https://github.com/Virtual-Vitality-Project/composite-wwwqr-sec-check/actions/workflows/main.yml/badge.svg)](https://github.com/Virtual-Vitality-Project/composite-wwwqr-sec-check/actions/workflows/main.yml)
