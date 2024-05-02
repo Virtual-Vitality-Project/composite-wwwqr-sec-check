@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: wwwqr
-        uses: actions/composite-wwwqr-sec-check@v1
+        uses: actions/security-checker@v1
         with:
           test-check: 'Alles is goed?'
       - run: echo the rand num is "$RAND_NR"
