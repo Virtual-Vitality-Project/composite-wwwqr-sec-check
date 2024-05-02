@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: wwwqr
-        uses: actions/composite-wwwqr-sec-check@v1
+        uses: Virtual-Vitality-Project/composite-wwwqr-sec-check/.github/workflows/main.yml@v1
         with:
           test-check: 'Alles is goed?'
       - run: echo the rand num is "$RAND_NR"
