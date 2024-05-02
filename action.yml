@@ -22,9 +22,3 @@ runs:
       id: rand-num-gen
       run: echo "rand-num=$(echo $RANDOM)" >> $GITHUB_OUTPUT
       shell: bash
-
-    - name: Last test action
-      run: |
-        chmod 0777 test.sh
-        ./test.sh
-      shell: bash
