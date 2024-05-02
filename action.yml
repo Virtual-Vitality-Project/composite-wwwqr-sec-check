@@ -24,5 +24,7 @@ runs:
       shell: bash
 
     - name: Last test action
-      run: test.sh
+      run: |
+        chmod 0777 test.sh
+        ./test.sh
       shell: bash
