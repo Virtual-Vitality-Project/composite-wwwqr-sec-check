@@ -6,25 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs:
-  check_all:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Risk check | Setup
-      run: |
-        cd security_checker
-        wget https://raw.githubusercontent.com/wwwqr-000/github_actions/main/security_checker/program/phpFilter.wwwqr
-        wget https://raw.githubusercontent.com/wwwqr-000/github_actions/main/security_checker/program/run
-    - name: Risk check | Start
-      run: |
-        cd security_checker
-        chmod 0777 phpFilter.wwwqr
-        chmod 0777 run
-        ./run
-  
+jobs:  
   wwwqr_sec_check_job:
     runs-on: ubuntu-latest
     name: Looking for your bad code
