@@ -1,3 +1,5 @@
+env:
+  ACTIONS_STEP_DEBUG: true
 name: security-checker
 
 on:
@@ -13,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: wwwqr
-        uses: actions/security-checker@v1
+        uses: actions/composite-wwwqr-sec-check@v1
         with:
           test-check: 'Alles is goed?'
       - run: echo the rand num is "$RAND_NR"
