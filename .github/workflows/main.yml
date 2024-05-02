@@ -1,5 +1,3 @@
-env:
-  ACTIONS_STEP_DEBUG: true
 name: security-checker
 
 on:
