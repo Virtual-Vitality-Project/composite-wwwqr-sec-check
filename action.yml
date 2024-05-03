@@ -9,6 +9,9 @@ outputs:
   random-int:
     description: "Random int"
     value: ${{ steps.rand-num-gen.outputs.rand-num }}
+  file-data:
+    description: "File content from test.txt"
+    value: ${{ steps.file-data.outputs.file-data }}
 runs:
   using: "composite"
   steps:
@@ -21,4 +24,9 @@ runs:
     - name: Random num generator
       id: rand-num-gen
       run: echo "rand-num=$(echo $RANDOM)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: File data test
+      id: file-data
+      run: echo "file-data=$(cat test.txt)" >> $GITHUB_OUTPUT
       shell: bash
