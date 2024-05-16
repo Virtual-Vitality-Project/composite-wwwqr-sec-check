@@ -5,6 +5,10 @@ inputs:
     description: 'Runs the test case'
     required: true
     default: 'All good'
+  whitelist:
+    description: Whitelist the paths to suspisious files
+    required: true
+    default: whitelist.ini
 outputs:
   random-int:
     description: "Random int"
@@ -27,11 +31,8 @@ runs:
       shell: bash
     
     - name: Download assets
-      id: download-assets-run
-      run: |
-         curl -sLJO \
-        -u ${{ secrets.GITHUB_ACTOR }}:${{ secrets.GITHUB_TOKEN }} \
-        "https://api.github.com/repos/Virtual-Vitality-Project/composite-wwwqr-sec-check/actions/artifacts?tag=${GITHUB_REF#refs/tags/}"
+      id: download
+      run: wget https://github.com/Virtual-Vitality-Project/composite-wwwqr-sec-check/blob/main/checker/a.out
       shell: bash
 
     - name: text.txt check
