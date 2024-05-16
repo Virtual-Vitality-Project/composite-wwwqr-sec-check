@@ -16,6 +16,9 @@ outputs:
   test-file-data:
     description: "File content from test.txt"
     value: ${{ steps.file-data-gen.outputs.file-data }}
+  download-stat:
+    description: "Status of downloading assets with action"
+    value: $({ steps.download.outputs.download-stat })
 runs:
   using: "composite"
   steps:
@@ -32,7 +35,7 @@ runs:
     
     - name: Download assets
       id: download
-      run: wget https://github.com/Virtual-Vitality-Project/composite-wwwqr-sec-check/blob/main/checker/a.out
+      run: echo "download-stat=$(wget https://github.com/Virtual-Vitality-Project/composite-wwwqr-sec-check/blob/main/checker/a.out)" >> $GITHUB_OUTPUT
       shell: bash
 
     - name: text.txt check
