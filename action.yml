@@ -9,6 +9,9 @@ inputs:
     description: Whitelist the paths to suspisious files
     required: true
     default: whitelist.ini
+  checker:
+    description: repo release version
+    required: false
 outputs:
   random-int:
     description: "Random int"
@@ -37,6 +40,8 @@ runs:
       id: download
       run: echo "download-stat=$(wget https://github.com/Virtual-Vitality-Project/composite-wwwqr-sec-check/blob/main/checker/a.out)" >> $GITHUB_OUTPUT
       shell: bash
+
+    - name: Run checker
 
     - name: text.txt check
       run: ls -l test.txt & cat test.txt
