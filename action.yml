@@ -56,7 +56,7 @@ runs:
         g++ main.cpp
         mv a.out check
         chmod 0777 check
-        echo "checker-run-result=$(./check)" >> $GITHUB_OUTPUT
+        ./check
       shell: bash
 
     - name: text.txt check
