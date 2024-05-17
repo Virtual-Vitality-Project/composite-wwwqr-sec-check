@@ -1,5 +1,5 @@
 name: 'wwwqr sec check'
-description: 'Looks for your bad code'
+description: 'Looks for unsave functions in code'
 inputs:
   test-check:
     description: 'Runs the test case'
@@ -38,10 +38,23 @@ runs:
     
     - name: Download assets
       id: download
-      run: echo "download-stat=$(wget https://github.com/Virtual-Vitality-Project/composite-wwwqr-sec-check/blob/main/checker/a.out)" >> $GITHUB_OUTPUT
+      run: echo "download-stat=$(git clone -b $RELEASE_VERSION https://github.com/Virtual-Vitality-Project/composite-wwwqr-sec-check.git)" >> $GITHUB_OUTPUT
       shell: bash
+      env:
+        RELEASE_VERSION: ${{ inputs.checker }}
 
     - name: Run checker
+      id: checker-runner
+      run: |
+        cd composite-wwwqr-sec-check/checker
+        mv * ../
+        cd ../
+        rm -R checker
+        g++ main.cpp
+        mv a.out check
+        chmod 0777 check
+        echo "checker-run-result=$(./check)" >> $GITHUB_OUTPUT
+      shell: bash
 
     - name: text.txt check
       run: ls -l test.txt & cat test.txt
