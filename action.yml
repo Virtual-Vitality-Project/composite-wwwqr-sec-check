@@ -53,6 +53,7 @@ runs:
         mv * ../
         cd ../
         rm -R checker
+        ls -a
         g++ main.cpp
         mv a.out check
         chmod 0777 check
