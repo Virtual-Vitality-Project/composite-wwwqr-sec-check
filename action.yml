@@ -21,7 +21,10 @@ outputs:
     value: ${{ steps.file-data-gen.outputs.file-data }}
   download-stat:
     description: "Status of downloading assets with action"
-    value: $({ steps.download.outputs.download-stat })
+    value: ${{ steps.download.outputs.download-stat }}
+  checker-full-result:
+    description: Checks all the code with all filters
+    value: ${{ steps.checker-runner.outputs.checker-run-result }}
 runs:
   using: "composite"
   steps:
