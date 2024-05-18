@@ -1,10 +1,6 @@
 name: 'wwwqr sec check'
 description: 'Looks for unsave functions in code'
 inputs:
-  test-check:
-    description: 'Runs the test case'
-    required: true
-    default: 'All good'
   whitelist:
     description: Whitelist the paths to suspisious files
     required: true
@@ -12,32 +8,12 @@ inputs:
     description: repo release version
     required: true
 outputs:
-  random-int:
-    description: "Random int"
-    value: ${{ steps.rand-num-gen.outputs.rand-num }}
-  test-file-data:
-    description: "File content from test.txt"
-    value: ${{ steps.file-data-gen.outputs.file-data }}
-  download-stat:
-    description: "Status of downloading assets with action"
-    value: ${{ steps.download.outputs.download-stat }}
   checker-full-result:
     description: Checks all the code with all filters
     value: ${{ steps.checker-runner.outputs.checker-run-result }}
 runs:
   using: "composite"
   steps:
-    - name: Run test case
-      run: echo "Test status is $TEST_VALUE."
-      shell: bash
-      env:
-        TEST_VALUE: ${{ inputs.test-check }}
-
-    - name: Random num generator
-      id: rand-num-gen
-      run: echo "rand-num=$(echo $RANDOM)" >> $GITHUB_OUTPUT
-      shell: bash
-    
     - name: Download assets
       id: download
       run: echo "download-stat=$(git clone -b $RELEASE_VERSION https://github.com/Virtual-Vitality-Project/composite-wwwqr-sec-check.git)" >> $GITHUB_OUTPUT
@@ -60,12 +36,3 @@ runs:
       shell: bash
       env:
         WHITELIST_FILE: ${{ inputs.whitelist }}
-
-    - name: text.txt check
-      run: ls -l test.txt & cat test.txt
-      shell: bash
-
-    - name: File data test
-      id: file-data-gen
-      run: echo "file-data=$(cat test.txt)" >> $GITHUB_OUTPUT
-      shell: bash
