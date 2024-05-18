@@ -70,7 +70,7 @@ void checkFiles(const std::string &whitelistPath) {
             continue;
         }
         //whitelist check
-        std::ifstream whitelist(whitelistPath);
+        std::ifstream whitelist(("../" + whitelistPath).c_str());
 
         if (whitelist.is_open()) {
             std::string tmpWLine;
