@@ -62,7 +62,7 @@ void setFileList() {
     }
 }
 
-void checkFiles() {
+void checkFiles(const std::string &whitelistPath) {
     for (auto& str : fileList) {
         std::ifstream file(str);
         std::string line;
@@ -70,7 +70,7 @@ void checkFiles() {
             continue;
         }
         //whitelist check
-        std::ifstream whitelist("whitelist.wwwqr");
+        std::ifstream whitelist(whitelistPath);
 
         if (whitelist.is_open()) {
             std::string tmpWLine;
@@ -87,7 +87,7 @@ void checkFiles() {
             }
         }
         else {
-            std::cout << "\n\nWhitelist.wwwqr file not found.\n\n";
+            std::cout << "\n\n" << whitelistPath << " file not found.\n\n";
         }
         //
         int lineCount = 0;
@@ -109,10 +109,13 @@ void checkFiles() {
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        throw std::runtime_error("Error: no whitelist argument given.\n");
+    }
     setFileList();
     createFilters();
-    checkFiles();
+    checkFiles(argv[1]);
     for (auto& str : warningList) {
         std::cout << str;
     }
