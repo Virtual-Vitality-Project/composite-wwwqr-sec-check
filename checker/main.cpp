@@ -7,6 +7,7 @@
 std::vector<std::string> fileList;
 std::vector<std::string> pyFilter;
 std::vector<std::string> phpFilter;
+std::vector<std::string> csFilter;
 std::vector<std::string> warningList;
 int returnCode = 0;
 
@@ -36,9 +37,23 @@ void createPyFilter() {
     conf.close();
 }
 
+void createCsFilter() {
+    std::ifstream conf("csFilter.wwwqr");
+    if (!conf.is_open()) {
+        std::cout << "\n\nCould not open csFilter.wwwqr.\n\n";
+        return;
+    }
+    std::string line;
+    while (std::getline(conf, line)) {
+        csFilter.emplace_back(line);
+    }
+    conf.close();
+}
+
 void createFilters() {
     createPhpFilter();
     createPyFilter();
+    createCsFilter();
 }
 
 std::string exec(const char* cmd) {
@@ -116,6 +131,9 @@ void checkFiles(const std::string &whitelistPath) {
         }
         else if (file_ext == "py") {
             activeFilter = pyFilter;
+        }
+        else if (file_ext == "cs") {
+            activeFilter = csFilter;
         }
 
         while (std::getline(file, line)) {
