@@ -5,6 +5,7 @@
 #include <string>
 
 std::vector<std::string> fileList;
+std::vector<std::string> pyFilter;
 std::vector<std::string> phpFilter;
 std::vector<std::string> warningList;
 int returnCode = 0;
@@ -22,8 +23,22 @@ void createPhpFilter() {
     conf.close();
 }
 
+void createPyFilter() {
+    std::ifstream conf("pyFilter.wwwqr");
+    if (!conf.is_open()) {
+        std::cout << "\n\nCould not open pyFilter.wwwqr.\n\n";
+        return;
+    }
+    std::string line;
+    while (std::getline(conf, line)) {
+        pyFilter.emplace_back(line);
+    }
+    conf.close();
+}
+
 void createFilters() {
     createPhpFilter();
+    createPyFilter();
 }
 
 std::string exec(const char* cmd) {
@@ -91,16 +106,26 @@ void checkFiles(const std::string &whitelistPath) {
         }
         //
         int lineCount = 0;
+
+        std::vector<std::string> activeFilter;
+
+        std::string file_ext = getExtentionName(str);
+
+        if (file_ext == "php") {
+            activeFilter = phpFilter;
+        }
+        else if (file_ext == "py") {
+            activeFilter = pyFilter;
+        }
+
         while (std::getline(file, line)) {
             ++lineCount;
-            if (getExtentionName(str) == "php") {
-                for (auto& val : phpFilter) {
-                    int tmpP = line.find(val);
-                    if (tmpP != std::string::npos) {
-                        warningList.emplace_back("Error at line " + std::to_string(lineCount) + " in '" + str + "' Filter: (" + val + ")\n");
-                        if (returnCode == 0) {
-                            returnCode = 1;
-                        }
+            for (auto& val : activeFilter) {
+                int tmpP = line.find(val);
+                if (tmpP != std::string::npos) {
+                    warningList.emplace_back("Error at line " + std::to_string(lineCount) + " in '" + str + "' Filter: (" + val + ")\n");
+                    if (returnCode == 0) {
+                        returnCode = 1;
                     }
                 }
             }
